@@ -29,55 +29,14 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`crypto-cli hello PERSON`](#crypto-cli-hello-person)
-* [`crypto-cli hello world`](#crypto-cli-hello-world)
 * [`crypto-cli help [COMMAND]`](#crypto-cli-help-command)
 * [`crypto-cli plugins`](#crypto-cli-plugins)
 * [`crypto-cli plugins:inspect PLUGIN...`](#crypto-cli-pluginsinspect-plugin)
 * [`crypto-cli plugins:install PLUGIN...`](#crypto-cli-pluginsinstall-plugin)
 * [`crypto-cli plugins:link PLUGIN`](#crypto-cli-pluginslink-plugin)
 * [`crypto-cli plugins:uninstall PLUGIN...`](#crypto-cli-pluginsuninstall-plugin)
-* [`crypto-cli plugins update`](#crypto-cli-plugins-update)
-
-## `crypto-cli hello PERSON`
-
-Hey, hello
-
-```
-USAGE
-  $ crypto-cli hello [PERSON] -f <value>
-
-ARGUMENTS
-  PERSON  Person to say hello to
-
-FLAGS
-  -f, --from=<value>  (required) Whom is saying hello
-
-DESCRIPTION
-  Hey, hello
-
-EXAMPLES
-  $ oex hello friend --from oclif
-  hello friend from oclif! (./src/commands/hello/index.ts)
-```
-
-_See code: [dist/commands/hello/index.ts](https://github.com/nguyenphuhao/hello-world/blob/v0.0.0/dist/commands/hello/index.ts)_
-
-## `crypto-cli hello world`
-
-Say hello world
-
-```
-USAGE
-  $ crypto-cli hello world
-
-DESCRIPTION
-  Say hello world
-
-EXAMPLES
-  $ oex hello world
-  hello world! (./src/commands/hello/world.ts)
-```
+* [`crypto-cli plugins:update`](#crypto-cli-pluginsupdate)
+* [`crypto-cli portfolio`](#crypto-cli-portfolio)
 
 ## `crypto-cli help [COMMAND]`
 
@@ -141,6 +100,8 @@ EXAMPLES
   $ crypto-cli plugins:inspect myplugin
 ```
 
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.0.11/src/commands/plugins/inspect.ts)_
+
 ## `crypto-cli plugins:install PLUGIN...`
 
 Installs a plugin into the CLI.
@@ -169,7 +130,7 @@ DESCRIPTION
   the CLI without the need to patch and update the whole CLI.
 
 ALIASES
-  $ crypto-cli plugins add
+  $ crypto-cli plugins:add
 
 EXAMPLES
   $ crypto-cli plugins:install myplugin 
@@ -178,6 +139,8 @@ EXAMPLES
 
   $ crypto-cli plugins:install someuser/someplugin
 ```
+
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.0.11/src/commands/plugins/install.ts)_
 
 ## `crypto-cli plugins:link PLUGIN`
 
@@ -206,6 +169,8 @@ EXAMPLES
   $ crypto-cli plugins:link myplugin
 ```
 
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.0.11/src/commands/plugins/link.ts)_
+
 ## `crypto-cli plugins:uninstall PLUGIN...`
 
 Removes a plugin from the CLI.
@@ -225,17 +190,19 @@ DESCRIPTION
   Removes a plugin from the CLI.
 
 ALIASES
-  $ crypto-cli plugins unlink
-  $ crypto-cli plugins remove
+  $ crypto-cli plugins:unlink
+  $ crypto-cli plugins:remove
 ```
 
-## `crypto-cli plugins update`
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.0.11/src/commands/plugins/uninstall.ts)_
+
+## `crypto-cli plugins:update`
 
 Update installed plugins.
 
 ```
 USAGE
-  $ crypto-cli plugins update [-h] [-v]
+  $ crypto-cli plugins:update [-h] [-v]
 
 FLAGS
   -h, --help     Show CLI help.
@@ -244,4 +211,15 @@ FLAGS
 DESCRIPTION
   Update installed plugins.
 ```
+
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.0.11/src/commands/plugins/update.ts)_
+
+## `crypto-cli portfolio`
+
+```
+USAGE
+  $ crypto-cli portfolio
+```
+
+_See code: [dist/commands/portfolio/index.ts](https://github.com/nguyenphuhao/crypto-cli/blob/v0.0.0/dist/commands/portfolio/index.ts)_
 <!-- commandsstop -->
