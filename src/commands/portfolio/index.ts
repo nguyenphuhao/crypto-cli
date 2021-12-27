@@ -1,18 +1,39 @@
-import { Command } from "@oclif/core";
-import list from '../../portfolio/list';
-import csvToArray from "../../helpers/csvToArray";
-
-type TransactionType = {
-    timestamp: number;
-    transaction_type: string;
-    token: string;
-    amount: number;
-}
+import { Command, Flags } from "@oclif/core";
+import isEmpty from "lodash/isEmpty";
+import calculateBalance from "../../portfolio/calculateBalance";
+import getTokenValues from "../../portfolio/getTokenValues";
 
 export default class GetPortfolioCommand extends Command {
-  async run(): Promise<any> {
-      const data =  await csvToArray<TransactionType>('./transaction.csv');
-      const result = await list(data);
-      console.table(result);
+  static description = "return the latest portfolio value per token in USD";
+  static flags = {
+    source: Flags.string({ char: "s" }),
+  };
+
+  async run() {
+    const { flags } = await this.parse(GetPortfolioCommand);
+
+    const sourceFile = flags.source || "./transaction.csv";
+
+    //Calculate the balance
+    const tokens = await calculateBalance(sourceFile);
+    if (isEmpty(tokens)) {
+      this.log("No data found.");
+      return;
+    }
+
+    //Get values and calculate the value
+    const counterSymbols = "USD";
+    const values = await getTokenValues(tokens, [counterSymbols]);
+
+    //Pretify the result
+    const result = Object.keys(tokens).map((key) => {
+      const price = values ? values[key][counterSymbols] : 0;
+      return {
+        token: key,
+        amount: tokens[key],
+        [counterSymbols]: tokens[key] * price
+      };
+    });
+    console.table(result);
   }
 }
