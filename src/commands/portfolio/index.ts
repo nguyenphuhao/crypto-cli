@@ -7,6 +7,7 @@ export default class GetPortfolioCommand extends Command {
   static description = "return the latest portfolio value per token in USD";
   static flags = {
     source: Flags.string({ char: "s" }),
+    token: Flags.string({ char: "t" }),
   };
 
   async run() {
@@ -15,11 +16,11 @@ export default class GetPortfolioCommand extends Command {
     const sourceFile = flags.source || "./transaction.csv";
 
     //Calculate the balance
-    const tokens = await calculateBalance(sourceFile);
-    if (isEmpty(tokens)) {
-      this.log("No data found.");
-      return;
-    }
+    const tokens = await calculateBalance(sourceFile, flags.token);
+      if (isEmpty(tokens)) {
+        this.log("No data found.");
+        return;
+      }
 
     //Get values and calculate the value
     const counterSymbols = "USD";
@@ -31,7 +32,7 @@ export default class GetPortfolioCommand extends Command {
       return {
         token: key,
         amount: tokens[key],
-        [counterSymbols]: tokens[key] * price
+        [counterSymbols]: tokens[key] * price,
       };
     });
     console.table(result);
