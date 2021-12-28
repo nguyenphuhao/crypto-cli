@@ -1,4 +1,3 @@
-import { isEmpty } from "lodash";
 import { TransactionTypes } from "../constanst";
 import readCSV from "../helpers/readCSV";
 import { TokenBalanceMap, TransactionType } from "./types";
@@ -6,14 +5,26 @@ import { TokenBalanceMap, TransactionType } from "./types";
 
 export default async function calculateBalance(
   path: string,
-  tokenParam?: string
+  tokenParam?: string,
+  dateParam?: string
 ): Promise<TokenBalanceMap> {
   try {
     const tokens: TokenBalanceMap = {};
     await readCSV<TransactionType>(path, (data) => {
-      const { token, transaction_type, amount } = data;
+      const { token, transaction_type, amount, timestamp } = data;
+      if (!token) {
+        return;
+      }
+      
+      if (dateParam) {
+        const dateTime = new Date(new Date(+timestamp*1000).toLocaleDateString());
+        const dateTimeParam = new Date(new Date(dateParam).toLocaleDateString());
+        if (dateTime.getTime() !== dateTimeParam.getTime()) {
+          return;
+        }
+      }
 
-      if (!isEmpty(tokenParam)) {
+      if (tokenParam) {
         if (tokenParam !== token) {
           return;
         }
