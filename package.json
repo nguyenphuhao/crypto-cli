@@ -1,7 +1,7 @@
 {
   "name": "crypto-cli",
-  "description": "Crypto portfolio managemen",
-  "version": "0.0.0",
+  "description": "Crypto Management",
+  "version": "1.0.0",
   "author": "Hao Nguyen",
   "bin": {
     "crypto-cli": "./bin/run"

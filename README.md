@@ -1,225 +1,164 @@
-oclif-hello-world
+crypto-cli
 =================
 
-oclif example Hello World CLI
-
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/oclif-hello-world.svg)](https://npmjs.org/package/oclif-hello-world)
-[![CircleCI](https://circleci.com/gh/oclif/hello-world/tree/main.svg?style=shield)](https://circleci.com/gh/oclif/hello-world/tree/main)
-[![Downloads/week](https://img.shields.io/npm/dw/oclif-hello-world.svg)](https://npmjs.org/package/oclif-hello-world)
-[![License](https://img.shields.io/npm/l/oclif-hello-world.svg)](https://github.com/oclif/hello-world/blob/main/package.json)
-
 <!-- toc -->
-* [Usage](#usage)
-* [Commands](#commands)
+
 <!-- tocstop -->
+
+# Introduction
+
+<!-- introduction -->
+
+A command line interface (CLI) program that helps to view the portfolio from the transaction log in CSV. Here are some features:
+
+- Given no parameters, return the latest portfolio value per token in USD
+- Given a token, return the latest portfolio value for that token in USD
+- Given a date, return the portfolio value per token in USD on that date
+- Given a date and a token, return the portfolio value of that token in USD on that date
+
+The CSV file has the following columns
+
+- timestamp: Integer number of seconds since the Epoch
+- transaction_type: Either a DEPOSIT or a WITHDRAWAL
+- token: The token symbol
+- amount: The amount transacted
+
+Note: The api to fetch prices data is from Crypto Compare API (https://min-api.cryptocompare.com/)
+
+<!-- introductionstop -->
+
+# Installation
+<!-- installation -->
+
+To install the `crypto-cli`, please do following
+
+```bash
+$ cd crypto-cli
+$ yarn install
+$ npm install -g .
+```
+To run the unit test
+
+```bash
+$ yarn test
+```
+
+<!-- installationstop -->
+
 # Usage
+
 <!-- usage -->
-```sh-session
-$ npm install -g crypto-cli
-$ crypto-cli COMMAND
-running command...
-$ crypto-cli (--version)
-crypto-cli/0.0.0 darwin-x64 node-v12.20.0
-$ crypto-cli --help [COMMAND]
+
+```bash
 USAGE
-  $ crypto-cli COMMAND
-...
+  $ crypto-cli portfolio [TOKEN] [-s <value>] [-d <value>]
+
+FLAGS
+  -d, --date=<value>    find the token value in USD at a specific date
+  -s, --source=<value>  [default: ./transaction.csv] transaction file in csv that stores all transaction
 ```
+
+To show help
+
+```bash
+$ crypto-cli portfolio --help
+```
+
 <!-- usagestop -->
-# Commands
-<!-- commands -->
-* [`crypto-cli help [COMMAND]`](#crypto-cli-help-command)
-* [`crypto-cli plugins`](#crypto-cli-plugins)
-* [`crypto-cli plugins:inspect PLUGIN...`](#crypto-cli-pluginsinspect-plugin)
-* [`crypto-cli plugins:install PLUGIN...`](#crypto-cli-pluginsinstall-plugin)
-* [`crypto-cli plugins:link PLUGIN`](#crypto-cli-pluginslink-plugin)
-* [`crypto-cli plugins:uninstall PLUGIN...`](#crypto-cli-pluginsuninstall-plugin)
-* [`crypto-cli plugins:update`](#crypto-cli-pluginsupdate)
-* [`crypto-cli portfolio`](#crypto-cli-portfolio)
 
-## `crypto-cli help [COMMAND]`
+# Examples
 
-Display help for crypto-cli.
+<!-- example -->
 
-```
-USAGE
-  $ crypto-cli help [COMMAND] [-n]
+### Given no parameters, return the latest portfolio value per token in USD
 
-ARGUMENTS
-  COMMAND  Command to show help for.
-
-FLAGS
-  -n, --nested-commands  Include all nested commands in the output.
-
-DESCRIPTION
-  Display help for crypto-cli.
+```bash
+$ crypto-cli portfolio
+$ crypto-cli portfolio --source=/Users/phuhao.nguyen/Downloads/transactions.csv
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.10/src/commands/help.ts)_
+***Note:*** the `transaction.csv` file is used at current directory as logged file by default. If your logged file is located in another place, just use `--source` or `-s` option.
 
-## `crypto-cli plugins`
+*The output:* 
 
-List installed plugins.
-
-```
-USAGE
-  $ crypto-cli plugins [--core]
-
-FLAGS
-  --core  Show core plugins.
-
-DESCRIPTION
-  List installed plugins.
-
-EXAMPLES
-  $ crypto-cli plugins
+```bash
+Token Amount             Usd
+ ───── ────────────────── ──────────────────
+ BTC   1200425.1521679235 58982997890.034615
+ ETH   901704.2831248266  3522579918.3697853
+ XRP   903332.9813728357  802069.3541609409
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.0.11/src/commands/plugins/index.ts)_
+### Given a token, return the latest portfolio value for that token in USD
 
-## `crypto-cli plugins:inspect PLUGIN...`
-
-Displays installation properties of a plugin.
-
-```
-USAGE
-  $ crypto-cli plugins:inspect PLUGIN...
-
-ARGUMENTS
-  PLUGIN  [default: .] Plugin to inspect.
-
-FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  Displays installation properties of a plugin.
-
-EXAMPLES
-  $ crypto-cli plugins:inspect myplugin
+```bash
+$ crypto-cli portfolio BTC
+$ crypto-cli portfolio BTC --source=/Users/phuhao.nguyen/Downloads/transactions.csv
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.0.11/src/commands/plugins/inspect.ts)_
+*The output:*
 
-## `crypto-cli plugins:install PLUGIN...`
-
-Installs a plugin into the CLI.
-
-```
-USAGE
-  $ crypto-cli plugins:install PLUGIN...
-
-ARGUMENTS
-  PLUGIN  Plugin to install.
-
-FLAGS
-  -f, --force    Run yarn install with force flag.
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  Installs a plugin into the CLI.
-
-  Can be installed from npm or a git url.
-
-  Installation of a user-installed plugin will override a core plugin.
-
-  e.g. If you have a core plugin that has a 'hello' command, installing a user-installed plugin with a 'hello' command
-  will override the core plugin implementation. This is useful if a user needs to update core plugin functionality in
-  the CLI without the need to patch and update the whole CLI.
-
-ALIASES
-  $ crypto-cli plugins:add
-
-EXAMPLES
-  $ crypto-cli plugins:install myplugin 
-
-  $ crypto-cli plugins:install https://github.com/someuser/someplugin
-
-  $ crypto-cli plugins:install someuser/someplugin
+```bash
+ Token Amount             Usd
+ ───── ────────────────── ─────────────────
+ BTC   1200425.1521679235 59036776936.85174
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.0.11/src/commands/plugins/install.ts)_
+### Given a date, return the portfolio value per token in USD on that date
 
-## `crypto-cli plugins:link PLUGIN`
-
-Links a plugin into the CLI for development.
-
-```
-USAGE
-  $ crypto-cli plugins:link PLUGIN
-
-ARGUMENTS
-  PATH  [default: .] path to plugin
-
-FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  Links a plugin into the CLI for development.
-
-  Installation of a linked plugin will override a user-installed or core plugin.
-
-  e.g. If you have a user-installed or core plugin that has a 'hello' command, installing a linked plugin with a 'hello'
-  command will override the user-installed or core plugin implementation. This is useful for development work.
-
-EXAMPLES
-  $ crypto-cli plugins:link myplugin
+```bash
+$ crypto-cli portfolio --date=2019-10-20
+$ crypto-cli portfolio --date=2019-10-20 --source=/Users/phuhao.nguyen/Downloads/transactions.csv
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.0.11/src/commands/plugins/link.ts)_
+*The output:*
 
-## `crypto-cli plugins:uninstall PLUGIN...`
-
-Removes a plugin from the CLI.
-
-```
-USAGE
-  $ crypto-cli plugins:uninstall PLUGIN...
-
-ARGUMENTS
-  PLUGIN  plugin to uninstall
-
-FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  Removes a plugin from the CLI.
-
-ALIASES
-  $ crypto-cli plugins:unlink
-  $ crypto-cli plugins:remove
+```bash
+ Token Amount             Usd
+ ───── ────────────────── ─────────────────
+ BTC   1200168.3902399263 59040507708.63561
+ XRP   903087.7927348375  802032.2687278092
+ ETH   901516.6678798293  3526967599.079541
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.0.11/src/commands/plugins/uninstall.ts)_
+### Given a date and a token, return the portfolio value of that token in USD on that date
 
-## `crypto-cli plugins:update`
-
-Update installed plugins.
-
-```
-USAGE
-  $ crypto-cli plugins:update [-h] [-v]
-
-FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  Update installed plugins.
+```bash
+$ crypto-cli portfolio ETH --date=2019-12-25
+$ crypto-cli portfolio ETH --date=2019-12-25 --source=/Users/phuhao.nguyen/Downloads/transactions.csv
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.0.11/src/commands/plugins/update.ts)_
+*The output:*
 
-## `crypto-cli portfolio`
-
+```bash
+ Token Amount            Usd
+ ───── ───────────────── ──────────────────
+ ETH   901704.2831248266 3531651063.4580207
 ```
-USAGE
-  $ crypto-cli portfolio
-```
 
-_See code: [dist/commands/portfolio/index.ts](https://github.com/nguyenphuhao/crypto-cli/blob/v0.0.0/dist/commands/portfolio/index.ts)_
-<!-- commandsstop -->
+<!-- examplestop -->
+
+# How it works
+
+This command line interface (CLI) program is built on top of `oclif` framework. Here is the simple structure of the project
+
+![image-20211228150555192](/Users/phuhao.nguyen/Library/Application Support/typora-user-images/image-20211228150555192.png)
+
+There're 3 main components: Commands, Services and API Client. 
+
+- The API Client helps to send request/receive response from Multiple API Provider (Crypto Compare, Binance, Coinmarketcap).
+- The Services contains all logic of the commands. The commands can invoke any services in need. 
+- The Commands helps to collect the arguments, options, and do a minor logic for a specific command. 
+
+Here are the main folders in the projects
+
+`api-client`: Follow the facet pattern to send request and receive response from the API Providers (crypto compare, binance, coinmarketcap...). 
+
+`commands`: All commands are developed here, to process the arguments, the options from the terminal.
+
+`portfolio`: A portfolio service folder, all the logic for the `crypto-cli portfolio` commands are developed here. In case we have more commands like `crypto-cli deposit`, a new service folder called `deposit` will be created. 
+
+`helpes`: To develop some common utilities for the projects. 
+
+`constants`: all constants variables are defined here.
+
