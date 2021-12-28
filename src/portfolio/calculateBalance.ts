@@ -19,7 +19,7 @@ export default async function calculateBalance(
       if (dateParam) {
         const dateTime = new Date(new Date(+timestamp*1000).toLocaleDateString());
         const dateTimeParam = new Date(new Date(dateParam).toLocaleDateString());
-        if (dateTime > dateTimeParam) {
+        if (dateTime.getTime() !== dateTimeParam.getTime()) {
           return;
         }
       }

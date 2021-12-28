@@ -48,7 +48,7 @@ export default class GetPortfolioCommand extends Command {
         [counterSymbols]: tokens[key] * price,
       };
     });
-    cli.flush();
+    cli.action.stop();
     cli.table(result, {
       token: {},
       amount: {},
