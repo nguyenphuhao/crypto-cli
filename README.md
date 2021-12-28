@@ -142,7 +142,9 @@ $ crypto-cli portfolio ETH --date=2019-12-25 --source=/Users/phuhao.nguyen/Downl
 
 This command line interface (CLI) program is built on top of `oclif` framework. Here is the simple structure of the project
 
-![image-20211228150555192](/Users/phuhao.nguyen/Library/Application Support/typora-user-images/image-20211228150555192.png)
+
+
+![image-20211228150555192](https://live.staticflickr.com/65535/51780893142_aa0e63fd85_z.jpg)
 
 There're 3 main components: Commands, Services and API Client. 
 
