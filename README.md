@@ -3,11 +3,11 @@ crypto-cli
 
 <!-- toc -->
 
-- [Introduction] (#introduction)
-- [Installation] (#installation)
-- [Usage] (#usage)
-- [Examples] (#example)
-- [Design] (#design)
+- [Introduction](#introduction)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Examples](#example)
+- [Design](#design)
 
 <!-- tocstop -->
 
