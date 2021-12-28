@@ -3,9 +3,13 @@ crypto-cli
 
 <!-- toc -->
 
-<!-- tocstop -->
+- [Introduction] (#introduction)
+- [Installation] (#installation)
+- [Usage] (#usage)
+- [Examples] (#example)
+- [Design] (#design)
 
-# Introduction
+<!-- tocstop -->
 
 <!-- introduction -->
 
@@ -138,7 +142,9 @@ $ crypto-cli portfolio ETH --date=2019-12-25 --source=/Users/phuhao.nguyen/Downl
 
 <!-- examplestop -->
 
-# How it works
+# Design
+
+<!-- example -->
 
 This command line interface (CLI) program is built on top of `oclif` framework. Here is the simple structure of the project
 
@@ -163,4 +169,6 @@ Here are the main folders in the projects
 `helpes`: To develop some common utilities for the projects. 
 
 `constants`: all constants variables are defined here.
+
+<!-- designstop -->
 
